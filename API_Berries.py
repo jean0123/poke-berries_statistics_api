@@ -90,4 +90,4 @@ def get_estadistic(berries_list):
 api.add_resource(Berries, '/allBerryStats', methods=['GET'])
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

@@ -5,6 +5,7 @@ import statistics
 from matplotlib import pyplot as plt
 
 app = Flask(__name__)
+app.config.from_pyfile('config.py')
 api = Api(app)
 
 @app.route('/')

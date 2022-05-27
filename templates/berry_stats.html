@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mytitle }}</title>
+</head>
+<body>
+    <h3>Hello there!</h3>
+        <p>I am an API that will give you the growth stats of all Pokemon berries!</p>
+        <p>You can go directly to the API:</p>
+        <p><a href="http://127.0.0.1:5000/allBerryStats" target="_blank">API</a></p>
+        <p>Or You can use the button below:</p>
+        <button onclick="getAllBerryStats()">Get All Berry Stats</button>
+        <br>
+        <div id="loader" class="loader" style="display: None"></div>
+        <br>
+        <div id="result" style="visibility: hidden">
+            <li>Berries' name:<ul id="berries"></ul></li>
+            <li>Statistics:<ul id="statistics"></ul></li>
+            <p> Histogram: </p>
+            <div id="histogram"></div>
+        </div>
+</body>
+
+<script>
+    function getAllBerryStats() {
+        document.getElementById("loader").style.display = "block";
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let jsonData = JSON.parse(this.responseText);
+                document.getElementById("loader").style.display = "none";
+                for (let i = 0; i < jsonData.berries_names.length; i++) {
+                    let berryName = jsonData.berries_names[i];
+                    let berry = document.createElement("li");
+                    berry.innerHTML = berryName;
+                    document.getElementById("berries").appendChild(berry);
+                }
+                delete jsonData.berries_names;
+                for (let element in jsonData) {
+                    let stat = document.createElement("li");
+                    if (typeof jsonData[element] === "object") {
+                        stat.innerHTML = element + ": ";
+                        stat2 = document.createElement("ul");
+                        for (let subElement in jsonData[element]) {
+                            let subStat = document.createElement("li");
+                            subStat.innerHTML = subElement + ": " + jsonData[element][subElement];
+                            stat2.appendChild(subStat);
+                        }
+                        stat.appendChild(stat2);
+                        document.getElementById("statistics").appendChild(stat);
+                    } else {
+                        stat.innerHTML = element + ": " + jsonData[element];
+                        document.getElementById("statistics").appendChild(stat);
+                    }
+                }
+                document.getElementById("result").style.visibility = "visible";
+                imag = document.createElement("img");
+                imag.src = "../static/images/histogram.png";
+                document.getElementById("histogram").appendChild(imag);
+            }
+        };
+        xhttp.open("GET", "http://127.0.0.1:5000/allBerryStats", true);
+        xhttp.send();
+    }
+</script>
+
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+</html>

@@ -10,7 +10,7 @@
     <h3>Hello there!</h3>
         <p>I am an API that will give you the growth stats of all Pokemon berries!</p>
         <p>You can go directly to the API:</p>
-        <p><a href="http://127.0.0.1:5000/allBerryStats" target="_blank">API</a></p>
+        <p><a href="https://poke-berries-statistics-api.herokuapp.com/allBerryStats" target="_blank">API</a></p>
         <p>Or You can use the button below:</p>
         <button onclick="getAllBerryStats()">Get All Berry Stats</button>
         <br>
@@ -62,7 +62,7 @@
                 document.getElementById("histogram").appendChild(imag);
             }
         };
-        xhttp.open("GET", "http://127.0.0.1:5000/allBerryStats", true);
+        xhttp.open("GET", "https://poke-berries-statistics-api.herokuapp.com/allBerryStats", true);
         xhttp.send();
     }
 </script>

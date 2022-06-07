@@ -12,7 +12,6 @@ api = Api(app)
 def index():
     pagetitle = "Api Berries"
     return render_template("berry_stats.html", mytitle=pagetitle)
-
 class Berries(Resource):
     '''
     Class to return the response of the api
